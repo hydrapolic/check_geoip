@@ -49,7 +49,6 @@ void check_version(GeoIP *gi) {
   struct tm db_date_tm;
   time_t db_date_timet;
   time_t now;
-  double seconds;
   int days;
   char message[100];
 
@@ -64,8 +63,7 @@ void check_version(GeoIP *gi) {
   db_date_timet = mktime(&db_date_tm);
   time(&now);
  
-  seconds = difftime(now, db_date_timet);
-  days = seconds / 3600 / 24;
+  days = difftime(now, db_date_timet) / 3600 / 24;
 
   if(days > DB_AGE_CRITICAL) {
     sprintf(message, "CRITICAL: database is %d days old", days);
