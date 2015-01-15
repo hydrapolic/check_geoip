@@ -10,17 +10,19 @@
 // db version: 20150106
 #define DATE_LEN 8
 #define DB_AGE_WARNING 60
-#define DB_AGE_ERROR 300
+#define DB_AGE_CRITICAL 300
 
-#define NAGIOS_OK 0
-#define NAGIOS_WARNING 1
-#define NAGIOS_ERROR 2
+enum {  
+  STATE_OK,
+  STATE_WARNING,
+  STATE_CRITICAL
+};
 
 void open_db(GeoIP **gi) {
   *gi = GeoIP_open(GEOIP_PATH "/GeoIP.dat", GEOIP_STANDARD);
 
   if (*gi == NULL)
-    print_status("CRITICAL: cannot open database", NAGIOS_ERROR);
+    print_status("CRITICAL: cannot open database", STATE_CRITICAL);
 }
   
 void close_db(GeoIP **gi) {
@@ -33,10 +35,10 @@ void check_country(GeoIP *gi) {
   returned_country = GeoIP_country_code_by_addr(gi, TEST_IP);
 
   if(returned_country == NULL)
-    print_status("CRITICAL: cannot query database", NAGIOS_ERROR); 
+    print_status("CRITICAL: cannot query database", STATE_CRITICAL); 
 
   if(strcmp(returned_country, TEST_COUNTRY) != 0) {
-    print_status("CRITICAL: country query returned different values", NAGIOS_ERROR); 
+    print_status("CRITICAL: country query returned different values", STATE_CRITICAL); 
   }
 }
 
@@ -65,12 +67,12 @@ void check_version(GeoIP *gi) {
   seconds = difftime(now, db_date_timet);
   days = seconds / 3600 / 24;
 
-  if(days > DB_AGE_ERROR) {
-    sprintf(message, "ERROR: database is %d old", days);
-    print_status(message, NAGIOS_ERROR);
+  if(days > DB_AGE_CRITICAL) {
+    sprintf(message, "CRITICAL: database is %d old", days);
+    print_status(message, STATE_CRITICAL);
   } else if (days > DB_AGE_WARNING) {
     sprintf(message, "WARNING: database is %d old", days);
-    print_status(message, NAGIOS_WARNING);
+    print_status(message, STATE_WARNING);
   } 
 }
 
@@ -88,7 +90,7 @@ int main(int argc, char **argv) {
   check_version(gi);
   close_db(&gi);
   
-  print_status("OK", NAGIOS_OK);
+  print_status("OK", STATE_OK);
 
   return 0;
 }
