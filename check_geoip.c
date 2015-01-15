@@ -10,7 +10,7 @@
 #define TEST_IP "8.8.8.8"
 #define TEST_COUNTRY "US"
 
-// db version: 20150106
+// db version is 8 chars (e.g. 20150106)
 #define DATE_LEN 8
 #define DB_AGE_WARNING 60
 #define DB_AGE_CRITICAL 300
