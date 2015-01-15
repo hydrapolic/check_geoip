@@ -66,10 +66,10 @@ void check_version(GeoIP *gi) {
   days = seconds / 3600 / 24;
 
   if(days > DB_AGE_ERROR) {
-    sprintf(message, "ERROR: database is %d old\n", days);
+    sprintf(message, "ERROR: database is %d old", days);
     print_status(message, NAGIOS_ERROR);
   } else if (days > DB_AGE_WARNING) {
-    sprintf(message, "WARNING: database is %d old\n", days);
+    sprintf(message, "WARNING: database is %d old", days);
     print_status(message, NAGIOS_WARNING);
   } 
 }
