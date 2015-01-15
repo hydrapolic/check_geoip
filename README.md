@@ -1,6 +1,6 @@
 # check_geoip
 
-This plugin checks the GeoIP database.
+This nagios plugin checks the free GeoIP database.
 
 It tries to open the database (GeoIP.dat), does a ip-to-country query and checks the database age.
 
