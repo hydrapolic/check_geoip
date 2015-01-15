@@ -223,7 +223,7 @@ int main(int argc, char **argv) {
   if(db_age > db_age_critical) {
     print_status(STATE_CRITICAL, "CRITICAL: database age = %d days, query for IP %s returned country %s | db_age=%d", db_age, test_ip, returned_country, db_age);
   } else if (db_age > db_age_warning) {
-    print_status(STATE_CRITICAL, "WARNING: database age = %d days, query for IP %s returned country %s | db_age=%d", db_age, test_ip, returned_country, db_age);
+    print_status(STATE_WARNING, "WARNING: database age = %d days, query for IP %s returned country %s | db_age=%d", db_age, test_ip, returned_country, db_age);
   } else {
     print_status(STATE_OK, "OK: database age = %d days, query for IP %s returned country %s | db_age=%d", db_age, test_ip, returned_country, db_age);
   }
