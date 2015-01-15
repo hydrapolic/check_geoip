@@ -68,10 +68,10 @@ void check_version(GeoIP *gi) {
   days = seconds / 3600 / 24;
 
   if(days > DB_AGE_CRITICAL) {
-    sprintf(message, "CRITICAL: database is %d old", days);
+    sprintf(message, "CRITICAL: database is %d days old", days);
     print_status(message, STATE_CRITICAL);
   } else if (days > DB_AGE_WARNING) {
-    sprintf(message, "WARNING: database is %d old", days);
+    sprintf(message, "WARNING: database is %d days old", days);
     print_status(message, STATE_WARNING);
   } 
 }
